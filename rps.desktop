@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=RoacPaperScissors
+Exec=/usr/bin/python3 /home/pi/RoacPaperScissors/game.py

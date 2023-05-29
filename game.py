@@ -1,11 +1,8 @@
 # Simple pygame program
-import time
+import os, time
 # Import and initialize the pygame library
 import pygame
 import random
-
-width = 1440
-height = 1080
 
 win_prob = 0.2    # should be smaller than 0.666
 
@@ -17,10 +14,20 @@ pygame.mixer.init()
 pygame.init()
 pygame.mouse.set_visible(False) 
 
+info = pygame.display.Info()
+w = info.current_w
+h = info.current_h
+
+if h >= 1080:
+    width = 1440
+    height = 1080
+else:
+    width = int(h*4/3)
+    height = h
+print(width, height)
 # Set up the drawing window
 screen = pygame.display.set_mode(
-    (width, height),
-    pygame.FULLSCREEN
+    (width, height), pygame.FULLSCREEN
 )
 clock = pygame.time.Clock()
 
@@ -33,6 +40,8 @@ def load_image(path):
     return img
 
 # Load images
+if os.name != 'nt':
+    os.chdir('/home/pi/RockPaperScissors')
 background = load_image("img/background.png")
 img_rock = load_image("img/rock.png")
 img_paper = load_image("img/paper.png")

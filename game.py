@@ -176,6 +176,7 @@ while running:
             image_list.append(img_win_left)
             image_list.append(img_win_right)
             play = 'sound_win'
+            stage = 1
             mode = 'fever'
 
         elif prob < win_prob+0.333:    # draw

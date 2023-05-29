@@ -84,12 +84,21 @@ while running:
                 if event.key == pygame.K_LEFT: 
                     action = 'sci'
                     mode = 'action'
-                    sound_go1.play()                    
+                    sound_ready1.stop()
+                    sound_ready2.stop()
+                    if stage == 1:
+                        sound_go1.play()
+                    elif stage == 2:
+                        sound_go2.play()                   
                 elif event.key == pygame.K_DOWN: 
                     action = 'rock'
                     mode = 'action'
                     sound_ready1.stop()
-                    sound_go1.play()                    
+                    sound_ready2.stop()
+                    if stage == 1:
+                        sound_go1.play()
+                    elif stage == 2:
+                        sound_go2.play()                   
                 elif event.key == pygame.K_RIGHT: 
                     action = 'paper'
                     mode = 'action'

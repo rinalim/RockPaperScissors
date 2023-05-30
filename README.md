@@ -7,7 +7,7 @@ cd /home/pi
 git clone https://github.com/rinalim/RockPaperScissors
 mkdir /home/pi/.config/autostart
 cp /home/pi/RockPaperScissors/rps.desktop /home/pi/.config/autostart/
-reboot
+sudo reboot
 ```
 
 ## How to play

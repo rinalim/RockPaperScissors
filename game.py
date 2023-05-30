@@ -1,10 +1,27 @@
 # Simple pygame program
-import os, time
+import os, sys, time
 # Import and initialize the pygame library
 import pygame
 import random
 
-win_prob = 0.2    # should be smaller than 0.666
+win_prob = 0.20    # should be smaller than 0.666
+
+# weight for each number [1, 2, 7, 4, 2, 20, 1, 2, 4, 4, 2, 4]
+numbers = [1, 2, 7, 4, 2, 20, 1, 2, 4, 4, 2, 4]
+sample_weight = [5, 2, 2, 2, 2, 1, 5, 2, 2, 2, 2, 2]
+sample_list = []
+i = 1
+for s in sample_weight:
+    for j in range(0,s):
+        sample_list.append(i)
+    i += 1
+print(sample_list)
+
+expeted_coin = 0.0
+for i in range(0, 12):
+    expeted_coin += sample_weight[i]*sample_list[i]/len(sample_list)
+expeted_coin *= win_prob/(0.666-win_prob)
+print('Expected coin = ', expeted_coin)
 
 case_win = {"sci":"paper", "rock":"sci", "paper":"rock"}
 case_lose = {"sci":"rock", "rock":"paper", "paper":"sci"}
@@ -24,7 +41,7 @@ if h >= 1080:
 else:
     width = int(h*4/3)
     height = h
-print(width, height)
+print('width', width, 'height', height)
 # Set up the drawing window
 screen = pygame.display.set_mode(
     (width, height), pygame.FULLSCREEN
@@ -145,8 +162,8 @@ while running:
         tick = 20
     
     elif mode == 'fever':
-        numbers = [1, 2, 7, 4, 2, 20, 1, 2, 4, 4, 2, 4]
-        result = random.randint(1,12)
+        #result = random.randint(1,12)
+        result = random.choice(sample_list)
         for n in range(0, 25+result):
             image_list.append(background)
             if action == 'rock':
@@ -166,7 +183,7 @@ while running:
             image_list.clear()
             sound_roll.play()
             clock.tick(9)
-        #print('You got ' + str(numbers[result-1]))
+        print('You got ' + str(numbers[result-1]) + ' coins')
         time.sleep(1)
         sound_yep.play()
         time.sleep(2)
@@ -174,7 +191,7 @@ while running:
 
     elif mode == 'action':
         prob = random.random()
-        print(prob)
+        #print(prob)
         if prob < win_prob:    # win 
             if case_win[action] == 'rock':
                 image_list.append(img_rock)

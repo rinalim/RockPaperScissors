@@ -3,6 +3,12 @@ import os, sys, time
 # Import and initialize the pygame library
 import pygame
 import random
+import RPi.GPIO as GPIO
+
+coin_pin = 21  # mk_arcade select
+sci_pin = 18  # mk_arcade b
+rock_pin = 22  # mk_arcade a
+paper_pin = 16  # mk_arcade r
 
 win_prob = 0.20    # should be smaller than 0.666
 
@@ -82,14 +88,63 @@ sound_roll = pygame.mixer.Sound( "sound/roll.wav" )
 sound_yep = pygame.mixer.Sound( "sound/yep.wav" )
 
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(coin_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(sci_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(rock_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(paper_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+def buttonClicked(pin):
+    global mode, action
+    if pin == coin_pin: 
+        if mode != 'ready':
+            mode = 'ready'
+            sound_ready1.play()
+        elif mode == 'ready':
+            if pin == sci_pin: 
+                action = 'sci'
+                mode = 'action'
+                sound_ready1.stop()
+                sound_ready2.stop()
+                if stage == 1:
+                    sound_go1.play()
+                elif stage == 2:
+                    sound_go2.play()                   
+            elif pin == rock_pin: 
+                action = 'rock'
+                mode = 'action'
+                    sound_ready1.stop()
+                    sound_ready2.stop()
+                    if stage == 1:
+                        sound_go1.play()
+                    elif stage == 2:
+                        sound_go2.play()                   
+            elif pin == paper_pin: 
+                action = 'paper'
+                mode = 'action'
+                sound_ready1.stop()
+                sound_ready2.stop()
+                if stage == 1:
+                    sound_go1.play()
+                elif stage == 2:
+                    sound_go2.play()
+
+# subscribe to button presses
+GPIO.add_event_detect(coin_pin, GPIO.FALLING, callback=buttonClicked, bouncetime = 300)
+GPIO.add_event_detect(sci_pin, GPIO.FALLING, callback=buttonClicked, bouncetime = 300)
+GPIO.add_event_detect(rock_pin, GPIO.FALLING, callback=buttonClicked, bouncetime = 300)
+GPIO.add_event_detect(paper_pin, GPIO.FALLING, callback=buttonClicked, bouncetime = 300)
+
 # Run until the user asks to quit
 running = True
 current = 'rock'
 mode = 'idle'    # 'idle', 'ready', 'action', 'fever'
+action = ''
 stage = 1
 pause_time = 0
 play = None
 image_list = []
+
 while running:
 
     # Did the user click the window close button?

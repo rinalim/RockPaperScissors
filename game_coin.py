@@ -20,7 +20,7 @@ print(sample_list)
 expeted_coin = 0.0
 for i in range(0, 12):
     expeted_coin += sample_weight[i]*sample_list[i]/len(sample_list)
-expeted_coin *= win_prob/(0.666-win_prob)
+expeted_coin *= win_prob/0.666
 print('Expected coin = ', expeted_coin)
 
 case_win = {"sci":"paper", "rock":"sci", "paper":"rock"}

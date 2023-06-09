@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=RockPaperScissors
-Exec=/usr/bin/python3 /home/pi/RockPaperScissors/game.py
+Exec=/usr/bin/python3 /home/pi/RockPaperScissors/game_gpio.py

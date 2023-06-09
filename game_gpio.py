@@ -100,34 +100,34 @@ def buttonClicked(pin):
         if mode != 'ready':
             mode = 'ready'
             sound_ready1.play()
-        elif mode == 'ready':
-            if pin == sci_pin: 
-                action = 'sci'
-                mode = 'action'
-                sound_ready1.stop()
-                sound_ready2.stop()
-                if stage == 1:
-                    sound_go1.play()
-                elif stage == 2:
-                    sound_go2.play()                   
-            elif pin == rock_pin: 
-                action = 'rock'
-                mode = 'action'
-                    sound_ready1.stop()
-                    sound_ready2.stop()
-                    if stage == 1:
-                        sound_go1.play()
-                    elif stage == 2:
-                        sound_go2.play()                   
-            elif pin == paper_pin: 
-                action = 'paper'
-                mode = 'action'
-                sound_ready1.stop()
-                sound_ready2.stop()
-                if stage == 1:
-                    sound_go1.play()
-                elif stage == 2:
-                    sound_go2.play()
+    elif mode == 'ready':
+        if pin == sci_pin: 
+            action = 'sci'
+            mode = 'action'
+            sound_ready1.stop()
+            sound_ready2.stop()
+            if stage == 1:
+                sound_go1.play()
+            elif stage == 2:
+                sound_go2.play()                   
+        elif pin == rock_pin: 
+            action = 'rock'
+            mode = 'action'
+            sound_ready1.stop()
+            sound_ready2.stop()
+            if stage == 1:
+                sound_go1.play()
+            elif stage == 2:
+                sound_go2.play()                   
+        elif pin == paper_pin: 
+            action = 'paper'
+            mode = 'action'
+            sound_ready1.stop()
+            sound_ready2.stop()
+            if stage == 1:
+                sound_go1.play()
+            elif stage == 2:
+                sound_go2.play()
 
 # subscribe to button presses
 GPIO.add_event_detect(coin_pin, GPIO.FALLING, callback=buttonClicked, bouncetime = 300)

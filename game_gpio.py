@@ -37,29 +37,41 @@ pygame.mixer.init()
 pygame.init()
 pygame.mouse.set_visible(False) 
 
-info = pygame.display.Info()
-w = info.current_w
-h = info.current_h
+# Read configuration
+with open('config.json') as f:
+    config = json.load(f)
 
-if h >= 1080:
-    width = 1440
-    height = 1080
+if config['autodetect']:
+ 
+    info = pygame.display.Info()
+    w = info.current_w
+    h = info.current_h
+
+    if h >= 1080:
+        width = 1440
+        height = 1080
+    else:
+        width = int(h*4/3)
+        height = h
 else:
-    width = int(h*4/3)
-    height = h
-print('width', width, 'height', height)
+    width = config['width']
+    height = config['height']
 # Set up the drawing window
-screen = pygame.display.set_mode(
-    (width, height), pygame.FULLSCREEN
-)
+if config['fullscreen']:
+    screen = pygame.display.set_mode(
+        (width, height), pygame.FULLSCREEN
+    )
+else:
+    screen = pygame.display.set_mode(
+        (width, height)
+    )
+print('width:', width, ', height:', height)
+
 clock = pygame.time.Clock()
 
 def load_image(path):
     img = pygame.image.load(path).convert_alpha()
     img = pygame.transform.scale(img, (width, height))
-    # for rotated screen
-    #img = pygame.transform.rotate(img, 90)
-    #img = pygame.transform.scale(img, (700, height))
     return img
 
 # Load images
@@ -217,7 +229,6 @@ while running:
         tick = 20
     
     elif mode == 'fever':
-        #result = random.randint(1,12)
         result = random.choice(sample_list)
         for n in range(0, 25+result):
             image_list.append(background)
@@ -288,7 +299,6 @@ while running:
     # show images
     for i in image_list:
         screen.blit(i, (0, 0))
-        #screen.blit(i, (500, 0))
     pygame.display.flip()
     image_list.clear()
 

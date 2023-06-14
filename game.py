@@ -66,9 +66,6 @@ clock = pygame.time.Clock()
 def load_image(path):
     img = pygame.image.load(path).convert_alpha()
     img = pygame.transform.scale(img, (width, height))
-    # for rotated screen
-    #img = pygame.transform.rotate(img, 90)
-    #img = pygame.transform.scale(img, (700, height))
     return img
 
 # Load images

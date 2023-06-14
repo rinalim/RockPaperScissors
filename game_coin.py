@@ -89,11 +89,11 @@ def signal_handler(signum, frame):
     sys.exit(0)
 signal.signal(signal.SIGINT, signal_handler)
 ser=serial.Serial('/dev/ttyACM0',9600)
-time.sleep(3)
+time.sleep(1)
 
-def coin_out(str_coin):
-    if str_coin > 0:
-        ser.write(str_coin)
+def coin_out(coin):
+    if int(coin) > 0:
+        ser.write(str.encode(str(coin)))
     time.sleep(0.1)    
     line = ''
     while ser.in_waiting:  # Or: while ser.inWaiting():
@@ -219,7 +219,7 @@ while running:
         time.sleep(1)
         sound_yep.play()
         time.sleep(2)
-        coin_out(str(numbers[result-1]))
+        coin_out(numbers[result-1])
         mode = 'idle'
 
     elif mode == 'action':

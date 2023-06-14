@@ -31,21 +31,36 @@ pygame.mixer.init()
 pygame.init()
 pygame.mouse.set_visible(False) 
 
-info = pygame.display.Info()
-w = info.current_w
-h = info.current_h
+# Read configuration
+with open('config.json') as f:
+    config = json.load(f)
 
-if h >= 1080:
-    width = 1440
-    height = 1080
+if config['autodetect']:
+ 
+    info = pygame.display.Info()
+    w = info.current_w
+    h = info.current_h
+
+    if h >= 1080:
+        width = 1440
+        height = 1080
+    else:
+        width = int(h*4/3)
+        height = h
 else:
-    width = int(h*4/3)
-    height = h
-print('width', width, 'height', height)
+    width = config['width']
+    height = config['height']
 # Set up the drawing window
-screen = pygame.display.set_mode(
-    (width, height), pygame.FULLSCREEN
-)
+if config['fullscreen']:
+    screen = pygame.display.set_mode(
+        (width, height), pygame.FULLSCREEN
+    )
+else:
+    screen = pygame.display.set_mode(
+        (width, height)
+    )
+print('width:', width, ', height:', height)
+
 clock = pygame.time.Clock()
 
 def load_image(path):

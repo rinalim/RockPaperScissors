@@ -3,6 +3,12 @@ import os, sys, time, json
 # Import and initialize the pygame library
 import pygame
 import random
+import RPi.GPIO as GPIO
+
+coin_pin = 21  # mk_arcade select
+sci_pin = 18  # mk_arcade b
+rock_pin = 22  # mk_arcade a
+paper_pin = 16  # mk_arcade r
 
 win_prob = 0.20    # should be smaller than 0.666
 
@@ -32,6 +38,8 @@ pygame.init()
 pygame.mouse.set_visible(False) 
 
 # Read configuration
+if os.name != 'nt':
+    os.chdir('/home/pi/RockPaperScissors')
 with open('config.json') as f:
     config = json.load(f)
 
@@ -69,8 +77,6 @@ def load_image(path):
     return img
 
 # Load images
-if os.name != 'nt':
-    os.chdir('/home/pi/RockPaperScissors')
 background = load_image("img/background.png")
 img_rock = load_image("img/rock.png")
 img_paper = load_image("img/paper.png")
@@ -94,7 +100,7 @@ sound_roll = pygame.mixer.Sound( "sound/roll.wav" )
 sound_yep = pygame.mixer.Sound( "sound/yep.wav" )
 
 ### Serial init...
-import serial, sys
+import serial
 import struct, signal, errno
 def signal_handler(signum, frame):
     close_fds(js_fds)
@@ -121,10 +127,12 @@ def coin_out(coin):
 running = True
 current = 'rock'
 mode = 'idle'    # 'idle', 'ready', 'action', 'fever'
+action = ''
 stage = 1
 pause_time = 0
 play = None
 image_list = []
+
 while running:
 
     # Did the user click the window close button?

@@ -38,6 +38,8 @@ pygame.init()
 pygame.mouse.set_visible(False) 
 
 # Read configuration
+if os.name != 'nt':
+    os.chdir('/home/pi/RockPaperScissors')
 with open('config.json') as f:
     config = json.load(f)
 
@@ -75,8 +77,6 @@ def load_image(path):
     return img
 
 # Load images
-if os.name != 'nt':
-    os.chdir('/home/pi/RockPaperScissors')
 background = load_image("img/background.png")
 img_rock = load_image("img/rock.png")
 img_paper = load_image("img/paper.png")

@@ -108,10 +108,11 @@ def signal_handler(signum, frame):
 if os.path.exists('/dev/ttyACM0'):
     signal.signal(signal.SIGINT, signal_handler)
     ser=serial.Serial('/dev/ttyACM0',9600)
+    use_hopper = True
     time.sleep(1)
 else:
     print('Arduino not found')
-    sys.exit(0)
+    use_hopper = False
 
 def coin_out(coin):
     if int(coin) > 0:
@@ -226,7 +227,7 @@ while running:
                         sound_go2.play()
 
     # Check Coin input
-    if ser.in_waiting:
+    if use_hopper and ser.in_waiting:
         val = ser.readline()
         try:
             int_val = int(val)
@@ -289,7 +290,8 @@ while running:
         time.sleep(1)
         sound_yep.play()
         time.sleep(2)
-        coin_out(numbers[result-1])
+        if use_hopper:
+            coin_out(numbers[result-1])
         mode = 'idle'
 
     elif mode == 'action':

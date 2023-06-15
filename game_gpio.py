@@ -1,5 +1,5 @@
 # Simple pygame program
-import os, sys, time
+import os, sys, time, json
 # Import and initialize the pygame library
 import pygame
 import random

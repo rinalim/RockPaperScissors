@@ -289,9 +289,10 @@ while running:
         print('You got ' + str(numbers[result-1]) + ' coins')
         time.sleep(1)
         sound_yep.play()
+        time.sleep(2)
         if use_hopper:
             coin_out(numbers[result-1])
-        time.sleep(2)
+        time.sleep(1)    
         mode = 'idle'
 
     elif mode == 'action':

@@ -132,7 +132,7 @@ GPIO.setup(paper_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 def buttonClicked(pin):
     global mode, action
-    if pin == coin_pin: 
+    if mode == 'idle' and pin == coin_pin: 
         if mode != 'ready':
             mode = 'ready'
             sound_ready1.play()
@@ -289,9 +289,9 @@ while running:
         print('You got ' + str(numbers[result-1]) + ' coins')
         time.sleep(1)
         sound_yep.play()
-        time.sleep(2)
         if use_hopper:
             coin_out(numbers[result-1])
+        time.sleep(2)
         mode = 'idle'
 
     elif mode == 'action':

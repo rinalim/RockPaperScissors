@@ -108,7 +108,7 @@ GPIO.setup(paper_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 def buttonClicked(pin):
     global mode, action
-    if mode == 'ready' and pin == coin_pin: 
+    if mode == 'idle' and pin == coin_pin: 
         if mode != 'ready':
             mode = 'ready'
             sound_ready1.play()

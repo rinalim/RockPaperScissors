@@ -21,6 +21,6 @@ Use CLI mode to achive full framerate.
 Edit /etc.rc.local for autostart
 ```
 ...
-/usr/bin/python3 /home/pi/RockPaperScissors/game_gpio.py &
+/usr/bin/python3 /home/pi/RockPaperScissors/game_all.py &
 exit 0
 ```
